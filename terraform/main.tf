@@ -141,8 +141,8 @@ resource "azurerm_container_group" "aci_strapi" {
   }
 
   container {
-    name   = "${var.project_name}strapiv4aci"
-    image  = "${var.image_registry_credential_server}/${var.project_name}strapiv4aci:latest"
+    name   = "${var.project_name}_strapi_aci"
+    image  = "${var.image_registry_credential_server}/${var.project_name}_strapi_aci:latest"
     cpu    = "0.5"
     memory = "0.5"
     environment_variables = {
@@ -206,8 +206,8 @@ resource "azurerm_container_group" "aci_gatsby" {
   }
 
   container {
-    name   = "${var.project_name}gatsbyv4aci"
-    image  = "${var.image_registry_credential_server}/${var.project_name}gatsbyv4aci:latest"
+    name   = "${var.project_name}_gatsby_aci"
+    image  = "${var.image_registry_credential_server}/${var.project_name}_gatsby_aci:latest"
     cpu    = "2"
     memory = "2"
     environment_variables = {

@@ -140,9 +140,9 @@ Thanks to Simen Daehlin for his article regarding **Docker with Strapi V4**: htt
 
 # Publication
 
-The following Medium is related to this GitHub repo.
+The following [Medium post](https://medium.com/@clementjoye/deploying-gatsby-with-strapi-with-live-preview-capability-using-a-serverless-architecture-c331ce2f89ff) is related to this GitHub repo.
 
 # License
-Copyright © 2015-present Clément Joye
+Copyright © 2022-present Clément Joye
 
 MIT

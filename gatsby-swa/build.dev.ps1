@@ -1,0 +1,1 @@
+docker build -t <your_project_name>_gatsby_aci:latest -f Dockerfile.dev .

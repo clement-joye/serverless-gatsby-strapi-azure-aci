@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<!-- Thanks to Anya Melnyk for the loading animations https://codepen.io/slyka85/pen/QvBQPb" -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Loading ACI</title>
+    <meta name="description" content="Page showing loading animation until ACIs are loaded.">
+    <style>
+        *, *:before, *:after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: calibri;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        .link {
+            color: grey;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+            color: whitesmoke;
+        }
+        
+        body {
+            background: black;
+        }
+        
+        .container {
+            text-align: center;
+            margin-top: 10%;
+        }
+        
+        section {
+            width: 30%;
+            display: inline-block;
+            text-align: center;
+            min-height: 215px;
+            vertical-align: top;
+            margin: 1%;
+            background: #080915;
+            border-radius: 5px;
+        }
+
+        .text-bloc {
+            display: inline-block;
+            margin: 54px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            section {
+                min-width: 350px;
+            }
+
+            .text-bloc {
+                margin: 54px auto;
+            }
+            
+            .loader {
+                margin: 30px 30px 10px 30px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        .loader {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 54px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        /*LOADER-1*/
+        
+        .loader-1 .loader-outter {
+            position: absolute;
+            border: 4px solid #4E26E0;
+            border-left-color: transparent;
+            border-bottom: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            -webkit-animation: loader-1-outter 1s cubic-bezier(.42, .61, .58, .41) infinite;
+            animation: loader-1-outter 1s cubic-bezier(.42, .61, .58, .41) infinite;
+        }
+        
+        .loader-1 .loader-inner {
+            position: absolute;
+            border: 4px solid #4E26E0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            left: calc(50% - 20px);
+            top: calc(50% - 20px);
+            border-right: 0;
+            border-top-color: transparent;
+            -webkit-animation: loader-1-inner 1s cubic-bezier(.42, .61, .58, .41) infinite;
+            animation: loader-1-inner 1s cubic-bezier(.42, .61, .58, .41) infinite;
+        }
+        /*LOADER-3*/
+        
+        .loader-3 .dot {
+            width: 10px;
+            height: 10px;
+            background: #744C9E;
+            border-radius: 50%;
+            position: absolute;
+            top: calc(50% - 5px);
+        }
+        
+        .loader-3 .dot1 {
+            left: 0px;
+            -webkit-animation: dot-jump 0.5s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+            animation: dot-jump 0.5s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+        }
+        
+        .loader-3 .dot2 {
+            left: 20px;
+            -webkit-animation: dot-jump 0.5s 0.2s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+            animation: dot-jump 0.5s 0.2s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+        }
+        
+        .loader-3 .dot3 {
+            left: 40px;
+            -webkit-animation: dot-jump 0.5s 0.4s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+            animation: dot-jump 0.5s 0.4s cubic-bezier(0.77, 0.47, 0.64, 0.28) alternate infinite;
+        }
+        /*LOADER-7*/
+        
+        .loader-7 .line {
+            width: 8px;
+            position: absolute;
+            border-radius: 5px;
+            bottom: 0;
+            background: -webkit-gradient(linear, left top, left bottom, from(#744C9E), to(#744C9E));
+            background: -webkit-linear-gradient(top, #744C9E, #744C9E);
+            background: -o-linear-gradient(top, #744C9E, #744C9E);
+            background: linear-gradient(to bottom, #744C9E, #744C9E);
+        }
+        
+        .loader-7 .line1 {
+            left: 0;
+            -webkit-animation: line-grow 0.5s ease alternate infinite;
+            animation: line-grow 0.5s ease alternate infinite;
+        }
+        
+        .loader-7 .line2 {
+            left: 20px;
+            -webkit-animation: line-grow 0.5s 0.2s ease alternate infinite;
+            animation: line-grow 0.5s 0.2s ease alternate infinite;
+        }
+        
+        .loader-7 .line3 {
+            left: 40px;
+            -webkit-animation: line-grow 0.5s 0.4s ease alternate infinite;
+            animation: line-grow 0.5s 0.4s ease alternate infinite;
+        }
+
+        /* ----------------      ARROWS      ----------------- */
+
+        .center-con {
+            display: inline-block;
+            margin: 75px;
+        }
+
+        .round {
+            position: relative;
+            border: 3px solid #fff;
+            width: 66px;
+            height: 66px;
+            border-radius: 100%;
+        }
+
+        .span {
+            z-index: 999;
+            height: 3px;
+            margin:1px;
+            width: 20px;
+            background: #fff;
+            transition: 0.4s ease;
+        }
+
+        .span:first-child {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 25%;
+            bottom: 35%;
+        }
+
+        .span:nth-child(2) {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 45%;
+            bottom: 35%;
+        }
+
+        .span:nth-child(3) {
+            display: block;
+            position: absolute;
+            transform: rotate(45deg);
+            left: 25%;
+            bottom: 54%;
+        }
+
+        .span:nth-child(4) {
+            display: block;
+            position: absolute;
+            transform: rotate(-45deg);
+            left: 45%;
+            bottom: 54%;
+        }
+
+        .round:hover span:nth-child(1) {
+            transform: rotate(-135deg);
+        }
+
+        .round:hover span:nth-child(2) {
+            transform: rotate(135deg);
+        }
+
+        .round:hover span:nth-child(3) {
+            transform: rotate(225deg);
+        }
+
+        .round:hover span:nth-child(4) {
+            transform: rotate(-225deg);
+        }
+
+        /* ----------------     KEYFRAMES    ----------------- */
+        
+        @-webkit-keyframes loader-1-outter {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes loader-1-outter {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        
+        @-webkit-keyframes loader-1-inner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+        
+        @keyframes loader-1-inner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+        
+        
+        @-webkit-keyframes dot-jump {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                -webkit-transform: translateY(-15px);
+                transform: translateY(-15px);
+            }
+        }
+        
+        @keyframes dot-jump {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                -webkit-transform: translateY(-15px);
+                transform: translateY(-15px);
+            }
+        }
+        
+        
+        @-webkit-keyframes line-grow {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 75%;
+            }
+        }
+        
+        @keyframes line-grow {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 75%;
+            }
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <section> 
+                <img alt="strapi logo" style="position: relative; display: block; object-fit: contain; width: 100%;" src="data:image/webp;base64,UklGRsIIAABXRUJQVlA4TLYIAAAvfcJCADVRvfZ/taX8D+Pu7u6Cu7u7u7u7u7u7u7u7u7u7O/y++7f3PufCWnsjvzId2hepGmn6D9huk07CbkSiNn5YPxGrk9E41tBI1zjWsB2xChPRqM1p2uzGsTysb2StMw1rd2ax7k1Y06hV24U8iz4ScTtoY9g2kuKYj++ZQZIAgGnbiCUzyBbYQsfjnZiZmbdbj3sB70zf7v8EBLMJ/wv/C/8L/wv/C/8L/wv/C/8L/wv/C/8L/wv/C/8L/4smRpSqYZszp+dC20w7wW3VWqbD1wdoPWB4dWLBrBNfnA0jIrKHVoeWTTrNmgm00/HmBRlRbowKYfPBBtRC1BRlVpAZuI6Mc2JrgV4frD1SoSqLOSGk7ZORVMvCNq0N+GRp+KVgYBo8vGxO6NSwBkhEPluhVk1+RDQrVqUFjeXw4VQt+5fGnl86Nvr8qnT+HCLsDjSqknw8DCmnFDowPt8MFUuUxlK4eDrl8LiB+1vL/389i4SOJzdRGNFhwsnkw6N000t9Gnt+a5UnlOz1ev1DyA4lb5Vcefy93lC2QlIXWegbr9c/j9EVNp7eNc30whkSCY1SfWonJa5YGJkLnUDRq65uJoYE7VkzUyf9+ONTEcA6QD3M448//niFViacVAP7OJuaR8T4QoN0F8ah1Kl4JZmCb4QaUDMJMSe6AHJ8zvbJaizhZMSkwuPs3+8h4q21M4+zaXnECFL1bEfkGKrjF0DnQCdW9KttiN4+uMyxy8d10mw6ThpHuycbHrqcYJfWTYsgAQSfMz9yw61MWn4xeHXQstYBAVodsizLGlHFJBTmQy22Jx3mac102pogUZWsgn/7xg8DCF4ZHE+RXJDtkhY7L5KMR8TI0iqQxfamk3dPTKwC2gQGLAF3aCytFFP6zGL70hYyjEoGupwgrjisyibeE3vRXYeI6Tk3qR1dyVyyKEJs77po0j/rAkQcZaYkiPvoOpkOSWIXQe5GxCiSL7H9aeunl4fXB3jXBSdUZLAqBM2EE9u/xjDaPdDlBGHlUy4ifnsY9Xv6tUX6Ek9m60KIzUcrQpMRGjziJpW5K+SMqZKBLmeoh/6K1Pp2brhVr+f9iCclPz9KGvNpOAe2vRG1e6DLGeQMOIH22uCawP82Y68K9aMNI+sVQDxybIWtZF9k62RfZCvRQS8ZTyUDXU5x9/IQsCpYMLYY3CGm1Ao5H0L27Ni2B0vEVNwjiyIejwV96PF4PANrmGc/BJSZ1k0ErwtMj/eta51simrXOLj6aLdm9mzYwNq2yR3bJAfQFPsKuqspszSadg90OUcVlpUhYARVIUSUKflxlA1SQRIR0T+uGF8sU2ZcBfB/EqFMmTJlootq7LWAcZXd6zo1XIcYR5wTg7I0ac4qETHPSd0Z3BpZhwTlQUQZXTrLD6DZ0P0MprDxVKDLSapjnwZGU52LGuYEvvKi8iUehWXgHnTxRATrYAKAlaD6aImKrZpWAzU559JbUfHY5SCATjaWQoeTgS5n2SsLEDCY5l3pQEvCVVrzIHwcsXaLZonK+w2r1qRnnT8qF+pWfxEwgtpQChVPJBseuJzmyq0AIuvL5k0VW/d0lM4MEhVnxYG50ReRNxV3jgZLwXshbwzRD3gtq5EUMuzR8rlo+TxvjHIx0/Kuyv2Iu6r9qMH7a8v/P33wZBsisleAXutZn4aTjrAOkBWV1wKAUVQhbFw4iUKDAuElLhxEC3juNpJUhrAn6ndd/JUsn1v8/ui0343/K7Du0ZTVsnn0m0iJytkJ7NaA/Pk0uBz5WzEBS8OZOKOsouWjXli6J72bh+idFk1St0E0HG9A7RlVdG7Q4BYVDVPA/ZVZzAIYQv57LOViiM1BWepkdCvKkRXqTq+iD50GX6rYG/j6GdMA4gOHf7vdzkq0BBxDdBx5DnBvCBvf5AoNCpTmG1wDeO42EbCHt2waS7Eksh4I/L+j42AJYB70Xa6UnJ8GS8EZOa6Y0tfAXOgxJgPEc1Nz1wL0j+TbT5efAN+zeLzPkwZ20dM5Tu9RbwPlpGkgolyqI2NUiUFMKLiBwTSFgEE1wM6peF1qY9YEGbJuLqTg3yppcUUVIXJfs5+CLHw/sXb9DJoECjVOzYQ97duDPpQNqIizgQE0EtgSsAfUnqtH0GsA3b9DHuD75y3ShFYFX30ACC93pV8JJLBYaXPAfi2b58CIiOzLX87MpeYrsDZELYASa3dpQLBhGiA6/sucb7dFMs9+qA7L2gDR0V0bzquLaYI6YBGYlNUQnbZto9SP73evL0jwXY2bpTkgklyA4LtyLQnnCiDwrupZKIpsQezoSuaSRREN9htRpUD0mC9xAy/xEJGbOMdXRJTRHCAvsyDuyYj9oELDqxwBkwkFldRqwjs79i6aBDC0rRu9Ok9KHhWrYw9zhOByGv54NeVHVWowLb4MrGZ+9Aw0DaC3C0MWvou2KoXKwRyaNfs5AOIbB60DcC2E1MR2SGrwcEP0TVwBExPJBTS0ZIJ23bHQW5H1dTfHmsAH7yKvTM8NrrEcAL9vkloWVtp5SHViMU+HRg1uxINHUdlKXzdFvYTGFsqS4eIp7ujlQob5bab5LW/G+W2ifid42NUh5qnS0oN+bOU0+CzY7Ni/UxDPt0EGoeo9q2fvadfYqXGHpqnKrMy5pbKxqThViB99cfnkxIz4bNhn4ym/q9h6K2ISPhtbreUBRPxICWWl1ldfn4Z4ZEbsheHUl32OnN4q2WzsxdJgUhshnU09PnPxxqvXiqPG3ihSTDG2mD2SJNF5b90zeyzxpXNR9UsciHjuS0HHRJDzoOHOlXp6EbddD+6AG68qjHquT4qjiefXC7OjmeeT4mji+TVevZ4dzTzx2o0QYUcTz68/ZkczT4mz0cTz64/ZcePZ26nhDrZm1ugrcTaad92ppmc/ZkcTb+hwIka9dDYK/wv/C/8L/wv/C/8L/wv/C/8L/wv/C/8L/wv/C/8L/wv/b1ob"/>
+                <a id="strapi-ready" class="loader hidden" href="{{strapiUrl}}/admin" target="_blank">
+                    <div class="round">
+                        <span class="span"></span>
+                        <span class="span"></span>
+                        <span class="span"></span>
+                        <span class="span"></span>
+                    </div>
+                </a>
+                <div id="strapi-loading" class="loader loader-1">
+                    <div class="loader-outter"></div>
+                    <div class="loader-inner"></div>
+                </div>
+                <div class="text-bloc">
+                    <span id="strapi-status" style="color: whitesmoke;font-size: 20px;display: block;font-family: Calibri;margin-top: 5px;">Status: Unknown</span>
+                    <a class="link" href="{{strapiStopUrl}}"  style="font-size: 20px; margin-top: 10px; margin-right: 10px; display:inline-block;">Stop</a>
+                    <a class="link" href="{{strapiStartUrl}}" style="font-size: 20px; margin-top: 10px; display:inline;">Start</a>
+                </div>
+            </section>
+            <section>
+                <img alt="gatsby logo" style="position: relative; display: block; object-fit: contain; width: 100%;" src="data:image/webp;base64,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" />
+                <a id="gatsby-ready" class="loader hidden" href="{{gatsbyUrl}}" target="_blank">
+                    <div class="round">
+                        <span class="span"></span>
+                        <span class="span"></span>
+                        <span class="span"></span>
+                        <span class="span"></span>
+                    </div>
+                </a>
+                <div id="gatsby-loading" class="loader loader-7">
+                    <div class="line line1"></div>
+                    <div class="line line2"></div>
+                    <div class="line line3"></div>
+                </div>
+                <div class="text-bloc">
+                    <span id="gatsby-status" style="color: whitesmoke;font-size: 20px;display: block;font-family: Calibri;margin-top: 5px;">Status: Unknown</span>
+                    <a class="link" href="{{gatsbyStopUrl}}" style="font-size: 20px; margin-top: 10px; margin-right: 10px; display:inline-block;">Stop</a>
+                    <a class="link" href="{{gatsbyStartUrl}}" style="font-size: 20px; margin-top: 10px; display:inline;">Start</a>
+                </div>
+            </section>
+            <div>
+                <label id="minutes">00</label>
+                <label id="colon">:</label>
+                <label id="seconds">00</label>
+            </div>
+          </div>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script type="text/javascript">
+            let strapiReady = false;
+            let gatsbyReady = false;
+            var intervalId;
+            let minutesLabel = document.getElementById("minutes");
+            let secondsLabel = document.getElementById("seconds");
+            let totalSeconds = 0;
+            function setStatus(loading, ready, status) {
+                if(status === "Ready") {
+                    if(!$(loading).hasClass("hidden")){
+                        $(loading).addClass('hidden');
+                    }
+
+                    if($(ready).hasClass("hidden")){
+                        $(ready).removeClass('hidden');
+                    }
+                }
+                else if(status === "Stopped") {
+                    if(!$(loading).hasClass("hidden")){
+                        $(loading).addClass('hidden');
+                    }
+
+                    if(!$(ready).hasClass("hidden")){
+                        $(ready).addClass('hidden');
+                    }
+                }
+                else {
+                    if(!$(ready).hasClass("hidden")){
+                        $(ready).addClass('hidden');
+                    }
+
+                    if($(loading).hasClass("hidden")){
+                        $(loading).removeClass('hidden');
+                    }
+                }
+            }
+            function getContainerGroupStatus() {
+                $.ajax({
+                    url: "{{url}}",
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+
+                        if(!data) {
+                            setTimeout(getContainerGroupStatus, 5000);
+                        }
+
+                        if(strapiReady && gatsbyReady) {
+                            clearInterval(intervalId);
+                            return;
+                        }
+
+                        if(!strapiReady) {
+                            setStatus("#strapi-loading", "#strapi-ready", data.strapi)
+                            $("#strapi-status").text(`Status: ${data.strapi}`)
+                        }
+                        
+                        if(!gatsbyReady) {
+                            setStatus("#gatsby-loading", "#gatsby-ready", data.gatsby)
+                            $("#gatsby-status").text(`Status: ${data.gatsby}`)
+                        }
+
+                        if(data.strapi === "Stopped" && data.gatsby === "Stopped") {
+                            clearInterval(intervalId);
+                            return;
+                        }
+
+                        if(data.strapi === "Running" && !strapiReady) {
+                            var strapiUrl = $("#strapi-ready").attr("href");
+                            getInstanceStatus(strapiUrl, "#strapi-loading", "#strapi-ready", "#strapi-status", "strapi");
+                        }
+
+                        if(data.gatsby === "Running" && !gatsbyReady) {
+                            var gatsbyUrl = $("#gatsby-ready").attr("href");
+                            getInstanceStatus(gatsbyUrl, "#gatsby-loading", "#gatsby-ready", "#gatsby-status", "gatsby");
+                        }
+
+                        setTimeout(getContainerGroupStatus, 5000);
+                    },
+                    error: function(err) {
+                        console.log(data);
+                        setTimeout(getContainerGroupStatus, 5000);
+                    }
+                });
+            }
+            function getInstanceStatus(url, loading, ready, status, instance) {
+                
+                try {
+                    $.ajax({
+                        url: url,
+                        timeout: 15000,
+                      })
+                      .done(function (jqXHR) {
+                        setStatus(loading, ready, "Ready")
+                        $(status).text(`Status: Ready`)
+
+                        if(instance == "strapi") {
+                            strapiReady = true;
+                        }
+                        
+                        if(instance == "gatsby") {
+                            gatsbyReady = true;
+                        }
+                    });
+                }
+                catch(error) { }
+            }
+            function setTime()
+            {
+                ++totalSeconds;
+                secondsLabel.innerHTML = pad(totalSeconds%60);
+                minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+            }
+            function pad(val)
+            {
+                var valString = val + "";
+                if(valString.length < 2)
+                {
+                    return "0" + valString;
+                }
+                else
+                {
+                    return valString;
+                }
+            }
+            $(document).ready(function() {
+                setTimeout(getContainerGroupStatus, 5000);
+                intervalId = setInterval(setTime, 1000);
+            });</script>
+    </body>
+</html>
+

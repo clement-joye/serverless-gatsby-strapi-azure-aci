@@ -79,6 +79,7 @@ resource "azurerm_windows_function_app" "fa" {
   storage_account_access_key  = azurerm_storage_account.sa.primary_access_key
   functions_extension_version = "~4"
   https_only                  = true
+  ftps_state                  = "FtpsOnly"
 
   site_config {
     application_insights_key = "${azurerm_application_insights.appi.instrumentation_key}"
